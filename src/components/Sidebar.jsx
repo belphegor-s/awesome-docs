@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { listDocs } from '../docs';
+import { FaGolang } from 'react-icons/fa6';
 import { FaPython, FaHome } from 'react-icons/fa';
 
 const ICONS = {
   Python: FaPython,
+  Golang: FaGolang,
 };
 
 const Sidebar = ({ onClose }) => {
@@ -31,7 +33,8 @@ const Sidebar = ({ onClose }) => {
                 `grid grid-cols-[auto_1fr] gap-2 items-center px-3 py-2 rounded text-sm font-medium ${isActive ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700'}`
               }
             >
-              <Icon /> {doc}
+              {Icon && <Icon />}
+              {doc}
             </NavLink>
           );
         })}
