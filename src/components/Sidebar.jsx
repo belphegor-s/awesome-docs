@@ -20,7 +20,7 @@ const Sidebar = ({ onClose }) => {
       <h1 className="text-2xl font-bold mb-6 text-center">Awesome Docs</h1>
       <nav className="space-y-2">
         <NavLink to="/" onClick={handleClick} className="grid grid-cols-[auto_1fr] gap-2 items-center px-3 py-2 text-slate-300 hover:bg-slate-700 rounded">
-          <FaHome /> Home
+          <FaHome size={18} className="w-5 h-5" /> Home
         </NavLink>
         {docs.map((doc) => {
           const Icon = ICONS[doc];
@@ -33,7 +33,7 @@ const Sidebar = ({ onClose }) => {
                 `grid grid-cols-[auto_1fr] gap-2 items-center px-3 py-2 rounded text-sm font-medium transition-all ${isActive ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700'}`
               }
             >
-              {Icon && <Icon />}
+              {Icon && <Icon size={20} className="w-5 h-5" />}
               {doc}
             </NavLink>
           );
