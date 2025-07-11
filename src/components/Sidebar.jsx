@@ -30,7 +30,7 @@ const Sidebar = ({ onClose }) => {
               to={`/docs/${doc}`}
               onClick={handleClick}
               className={({ isActive }) =>
-                `grid grid-cols-[auto_1fr] gap-2 items-center px-3 py-2 rounded text-sm font-medium ${isActive ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700'}`
+                `grid grid-cols-[auto_1fr] gap-2 items-center px-3 py-2 rounded text-sm font-medium transition-all ${isActive ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700'}`
               }
             >
               {Icon && <Icon />}

@@ -11,8 +11,8 @@ const Home = () => {
       <ul className="space-y-4">
         {docNames.map((doc) => (
           <li key={doc}>
-            <Link to={`/docs/${doc}`} className="text-blue-400 hover:underline text-lg">
-              → {doc}
+            <Link to={`/docs/${doc}`} className="group text-blue-400 text-lg">
+              → <span className="group-hover:underline">{doc}</span>
             </Link>
           </li>
         ))}
