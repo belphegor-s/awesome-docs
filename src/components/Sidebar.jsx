@@ -15,7 +15,7 @@ const Sidebar = ({ onClose }) => {
 
   return (
     <div className="p-4 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Awesome Docs</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Awesome Docs</h1>
       <nav className="space-y-2">
         <NavLink to="/" onClick={handleClick} className="grid grid-cols-[auto_1fr] gap-2 items-center px-3 py-2 text-slate-300 hover:bg-slate-700 rounded">
           <FaHome /> Home
