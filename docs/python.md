@@ -1,129 +1,137 @@
-# Python Cheat Sheet - Complete Documentation
+# Complete Python Cheat Sheet & Professional Practices
 
 ## Table of Contents
 
-1. [Basic Syntax & Variables](#basic-syntax--variables)
-2. [Data Types & Structures](#data-types--structures)
+1. [Python Basics](#python-basics)
+2. [Data Types & Variables](#data-types--variables)
 3. [Control Flow](#control-flow)
 4. [Functions](#functions)
-5. [Object-Oriented Programming](#object-oriented-programming)
-6. [Error Handling](#error-handling)
-7. [File I/O & Path Operations](#file-io--path-operations)
-8. [Iterators & Generators](#iterators--generators)
-9. [Functional Programming](#functional-programming)
-10. [Concurrency & Parallelism](#concurrency--parallelism)
-11. [Advanced Features](#advanced-features)
-12. [Testing & Debugging](#testing--debugging)
-13. [Performance & Optimization](#performance--optimization)
-14. [Logging](#logging)
+5. [Data Structures](#data-structures)
+6. [Object-Oriented Programming](#object-oriented-programming)
+7. [Error Handling](#error-handling)
+8. [File I/O](#file-io)
+9. [Modules & Packages](#modules--packages)
+10. [Built-in Functions](#built-in-functions)
+11. [List/Dict/Set Comprehensions](#listdictset-comprehensions)
+12. [Generators & Iterators](#generators--iterators)
+13. [Decorators](#decorators)
+14. [Context Managers](#context-managers)
 15. [Regular Expressions](#regular-expressions)
-16. [Professional Best Practices](#professional-best-practices)
+16. [Testing](#testing)
+17. [Performance & Optimization](#performance--optimization)
+18. [Professional Best Practices](#professional-best-practices)
+19. [Code Style & Standards](#code-style--standards)
+20. [Advanced Topics](#advanced-topics)
 
 ---
 
-## Basic Syntax & Variables
+## Python Basics
 
-### Variable Naming Conventions (PEP 8)
-
-- **Variables & Functions**: `snake_case`
-- **Constants**: `UPPER_CASE`
-- **Classes**: `PascalCase`
-- **Private attributes**: `_single_underscore`
-- **Name mangling**: `__double_underscore`
-
-### Type Hints
+### Comments
 
 ```python
-# Basic types
-name: str = "Python"
-age: int = 25
-price: float = 19.99
-is_active: bool = True
-
-# Collections
-numbers: List[int] = [1, 2, 3]
-person: Dict[str, Any] = {"name": "Alice", "age": 30}
-coordinates: Tuple[int, int] = (10, 20)
-
-# Optional and Union types
-optional_name: Optional[str] = None
-id_or_name: Union[int, str] = "user_123"
+# Single line comment
+"""
+Multi-line comment
+or docstring
+"""
 ```
 
-### Multiple Assignment & Unpacking
+### Print & Input
 
 ```python
-# Multiple assignment
-x, y, z = 1, 2, 3
-a = b = c = 0
+print("Hello, World!")
+print("Name:", name, "Age:", age)
+print(f"Name: {name}, Age: {age}")  # f-strings (preferred)
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+```
 
-# Unpacking
-first, *middle, last = [1, 2, 3, 4, 5]
-head, *tail = ["a", "b", "c", "d"]
+### Variables & Assignment
+
+```python
+# Variable assignment
+x = 5
+y, z = 10, 20  # Multiple assignment
+x, y = y, x    # Swap values
+
+# Constants (by convention, use UPPERCASE)
+PI = 3.14159
+MAX_SIZE = 100
 ```
 
 ---
 
-## Data Types & Structures
+## Data Types & Variables
 
-### Strings
+### Basic Data Types
 
 ```python
-# F-strings (Python 3.6+) - Preferred method
+# Integers
+num = 42
+binary = 0b1010  # 10 in binary
+octal = 0o12     # 10 in octal
+hex_num = 0xA    # 10 in hexadecimal
+
+# Floats
+pi = 3.14159
+scientific = 1.5e-4  # 0.00015
+
+# Strings
+name = "Alice"
+message = 'Hello'
+multiline = """This is a
+multiline string"""
+
+# Booleans
+is_valid = True
+is_empty = False
+
+# None
+result = None
+```
+
+### String Operations
+
+```python
+# String methods
+text = "Hello, World!"
+print(text.upper())      # HELLO, WORLD!
+print(text.lower())      # hello, world!
+print(text.title())      # Hello, World!
+print(text.strip())      # Remove whitespace
+print(text.replace("Hello", "Hi"))  # Hi, World!
+print(text.split(","))   # ['Hello', ' World!']
+
+# String formatting
 name = "Alice"
 age = 30
-message = f"Hello, {name}! You are {age} years old."
+print(f"Name: {name}, Age: {age}")  # f-strings (Python 3.6+)
+print("Name: {}, Age: {}".format(name, age))  # .format()
+print("Name: %s, Age: %d" % (name, age))  # % formatting (old style)
 
-# String methods
-text = "  Hello, World!  "
-cleaned = text.strip().lower().replace("world", "python")
-words = text.split()
-joined = "-".join(words)
+# String slicing
+text = "Python"
+print(text[0])      # P
+print(text[-1])     # n
+print(text[1:4])    # yth
+print(text[:3])     # Pyt
+print(text[3:])     # hon
+print(text[::-1])   # nohtyP (reverse)
 ```
 
-### Lists
+### Type Conversion
 
 ```python
-# List comprehensions
-squares = [x**2 for x in range(10)]
-evens = [x for x in range(20) if x % 2 == 0]
-matrix = [[i*j for j in range(3)] for i in range(3)]
+# Convert between types
+str_num = "42"
+int_num = int(str_num)
+float_num = float(str_num)
+str_again = str(int_num)
 
-# List methods
-numbers = [1, 2, 3]
-numbers.append(4)           # Add to end
-numbers.insert(0, 0)        # Insert at index
-numbers.extend([5, 6])      # Add multiple items
-numbers.remove(2)           # Remove first occurrence
-popped = numbers.pop()      # Remove and return last item
-```
-
-### Dictionaries
-
-```python
-# Dictionary comprehensions
-squared_dict = {x: x**2 for x in range(5)}
-filtered_dict = {k: v for k, v in data.items() if condition}
-
-# Dictionary methods
-person = {"name": "Alice", "age": 30}
-name = person.get("name", "Unknown")    # Safe access
-keys = person.keys()
-values = person.values()
-items = person.items()
-```
-
-### Sets
-
-```python
-# Set operations
-set_a = {1, 2, 3, 4}
-set_b = {3, 4, 5, 6}
-
-union = set_a | set_b           # {1, 2, 3, 4, 5, 6}
-intersection = set_a & set_b    # {3, 4}
-difference = set_a - set_b      # {1, 2}
-symmetric_diff = set_a ^ set_b  # {1, 2, 5, 6}
+# Check types
+print(type(42))         # <class 'int'>
+print(isinstance(42, int))  # True
 ```
 
 ---
@@ -133,697 +141,1629 @@ symmetric_diff = set_a ^ set_b  # {1, 2, 5, 6}
 ### Conditional Statements
 
 ```python
-# If-elif-else
-def categorize_age(age: int) -> str:
-    if age < 13:
-        return "child"
-    elif age < 20:
-        return "teenager"
-    elif age < 65:
-        return "adult"
-    else:
-        return "senior"
+# if-elif-else
+age = 18
+if age >= 18:
+    print("Adult")
+elif age >= 13:
+    print("Teenager")
+else:
+    print("Child")
 
 # Ternary operator
-status = "active" if user.is_logged_in else "inactive"
+status = "Adult" if age >= 18 else "Minor"
 
-# Match statement (Python 3.10+)
-def handle_status(status: str) -> str:
-    match status:
-        case "pending":
-            return "Processing..."
-        case "approved":
-            return "Access granted"
-        case "rejected":
-            return "Access denied"
-        case _:
-            return "Unknown status"
+# Multiple conditions
+if age >= 18 and age < 65:
+    print("Working age")
+
+if name == "Alice" or name == "Bob":
+    print("Known person")
 ```
 
 ### Loops
 
 ```python
-# For loops with enumerate
-for index, value in enumerate(items):
-    print(f"{index}: {value}")
+# for loop
+for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4
 
-# For loops with zip
-names = ["Alice", "Bob", "Charlie"]
-ages = [25, 30, 35]
-for name, age in zip(names, ages):
-    print(f"{name} is {age} years old")
+for i in range(1, 6):
+    print(i)  # 1, 2, 3, 4, 5
 
-# Dictionary iteration
-for key, value in dictionary.items():
-    print(f"{key}: {value}")
+for i in range(0, 10, 2):
+    print(i)  # 0, 2, 4, 6, 8
 
-# While loops with else
-counter = 0
-while counter < 5:
-    print(counter)
-    counter += 1
+# Iterating over sequences
+fruits = ["apple", "banana", "orange"]
+for fruit in fruits:
+    print(fruit)
+
+# Enumerate for index and value
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+
+# while loop
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+
+# Loop control
+for i in range(10):
+    if i == 3:
+        continue  # Skip this iteration
+    if i == 7:
+        break     # Exit loop
+    print(i)
+
+# else clause with loops
+for i in range(5):
+    print(i)
 else:
-    print("Loop completed normally")
+    print("Loop completed normally")  # Only if no break
 ```
 
 ---
 
 ## Functions
 
-### Function Definitions
+### Function Definition
 
 ```python
-# Basic function with type hints
-def calculate_area(length: float, width: float) -> float:
-    """Calculate the area of a rectangle."""
-    return length * width
+# Basic function
+def greet(name):
+    return f"Hello, {name}!"
 
 # Function with default parameters
-def greet(name: str, greeting: str = "Hello") -> str:
-    """Greet a person with a custom greeting."""
+def greet(name, greeting="Hello"):
     return f"{greeting}, {name}!"
 
-# Function with variable arguments
-def sum_numbers(*args: int) -> int:
-    """Sum any number of integers."""
-    return sum(args)
+# Function with multiple parameters
+def add(a, b):
+    return a + b
 
-def create_profile(**kwargs: Any) -> Dict[str, Any]:
-    """Create a user profile from keyword arguments."""
-    return kwargs
+# Function with *args and **kwargs
+def flexible_func(*args, **kwargs):
+    print("Args:", args)
+    print("Kwargs:", kwargs)
+
+flexible_func(1, 2, 3, name="Alice", age=30)
+
+# Type hints (Python 3.5+)
+def add_numbers(a: int, b: int) -> int:
+    return a + b
+
+# Function with optional parameters
+def create_user(name: str, email: str = None, age: int = None) -> dict:
+    user = {"name": name}
+    if email:
+        user["email"] = email
+    if age:
+        user["age"] = age
+    return user
 ```
 
-### Advanced Function Features
+### Lambda Functions
 
 ```python
-# Lambda functions
-square = lambda x: x**2
-is_even = lambda x: x % 2 == 0
+# Lambda (anonymous) functions
+square = lambda x: x ** 2
+add = lambda x, y: x + y
 
-# Higher-order functions
-def apply_function(func: Callable, data: List[Any]) -> List[Any]:
-    """Apply a function to each item in a list."""
-    return [func(item) for item in data]
+# Using lambda with built-in functions
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x ** 2, numbers))
+even = list(filter(lambda x: x % 2 == 0, numbers))
+```
 
-# Closures
-def make_multiplier(factor: int) -> Callable[[int], int]:
-    """Create a multiplier function."""
-    def multiplier(x: int) -> int:
-        return x * factor
+### Higher-Order Functions
+
+```python
+# Functions as arguments
+def apply_operation(func, x, y):
+    return func(x, y)
+
+result = apply_operation(lambda a, b: a + b, 5, 3)  # 8
+
+# Functions returning functions
+def create_multiplier(n):
+    def multiplier(x):
+        return x * n
     return multiplier
 
-double = make_multiplier(2)
-triple = make_multiplier(3)
+double = create_multiplier(2)
+print(double(5))  # 10
 ```
 
-### Decorators
+---
+
+## Data Structures
+
+### Lists
 
 ```python
-# Function decorator
-def log_calls(func):
-    """Decorator to log function calls."""
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        print(f"Calling {func.__name__} with args: {args}, kwargs: {kwargs}")
-        result = func(*args, **kwargs)
-        print(f"{func.__name__} returned: {result}")
-        return result
-    return wrapper
+# List creation
+fruits = ["apple", "banana", "orange"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", 3.14, True]
 
-# Decorator with parameters
-def retry(max_attempts: int = 3, delay: float = 1.0):
-    """Decorator to retry function on failure."""
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            for attempt in range(max_attempts):
-                try:
-                    return func(*args, **kwargs)
-                except Exception as e:
-                    if attempt == max_attempts - 1:
-                        raise
-                    print(f"Attempt {attempt + 1} failed: {e}")
-                    time.sleep(delay)
-            return None
-        return wrapper
-    return decorator
+# List operations
+fruits.append("grape")          # Add to end
+fruits.insert(1, "kiwi")        # Insert at index
+fruits.remove("banana")         # Remove by value
+popped = fruits.pop()           # Remove and return last
+fruits.extend(["mango", "pear"]) # Add multiple items
 
-# Class decorator
-def singleton(cls):
-    """Decorator to make a class a singleton."""
-    instances = {}
-    def get_instance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return get_instance
+# List slicing
+print(fruits[1:3])    # Elements from index 1 to 2
+print(fruits[:2])     # First 2 elements
+print(fruits[2:])     # From index 2 to end
+print(fruits[-2:])    # Last 2 elements
+
+# List methods
+fruits.sort()                   # Sort in place
+sorted_fruits = sorted(fruits)  # Return new sorted list
+fruits.reverse()                # Reverse in place
+count = fruits.count("apple")   # Count occurrences
+index = fruits.index("apple")   # Find index
+
+# List comprehensions
+squares = [x**2 for x in range(10)]
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+```
+
+### Tuples
+
+```python
+# Tuple creation
+point = (3, 4)
+colors = ("red", "green", "blue")
+single_item = (42,)  # Note the comma
+
+# Tuple unpacking
+x, y = point
+first, *rest = colors  # first="red", rest=["green", "blue"]
+
+# Named tuples
+from collections import namedtuple
+Point = namedtuple('Point', ['x', 'y'])
+p = Point(3, 4)
+print(p.x, p.y)  # 3 4
+```
+
+### Dictionaries
+
+```python
+# Dictionary creation
+person = {"name": "Alice", "age": 30, "city": "New York"}
+empty_dict = {}
+dict_from_keys = dict.fromkeys(["a", "b", "c"], 0)
+
+# Dictionary operations
+person["email"] = "alice@example.com"  # Add/update
+age = person.get("age", 0)             # Get with default
+person.setdefault("country", "USA")    # Set if not exists
+person.update({"phone": "123-456-7890", "age": 31})
+
+# Dictionary methods
+keys = person.keys()
+values = person.values()
+items = person.items()
+
+# Dictionary comprehensions
+squares = {x: x**2 for x in range(5)}
+filtered = {k: v for k, v in person.items() if isinstance(v, str)}
+```
+
+### Sets
+
+```python
+# Set creation
+fruits = {"apple", "banana", "orange"}
+numbers = set([1, 2, 3, 4, 5])
+empty_set = set()  # Note: {} creates an empty dict
+
+# Set operations
+fruits.add("grape")
+fruits.remove("banana")  # KeyError if not found
+fruits.discard("kiwi")   # No error if not found
+
+# Set operations
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5, 6}
+union = set1 | set2           # {1, 2, 3, 4, 5, 6}
+intersection = set1 & set2    # {3, 4}
+difference = set1 - set2      # {1, 2}
+symmetric_diff = set1 ^ set2  # {1, 2, 5, 6}
+
+# Set comprehensions
+even_squares = {x**2 for x in range(10) if x % 2 == 0}
 ```
 
 ---
 
 ## Object-Oriented Programming
 
-### Basic Classes
+### Classes and Objects
 
 ```python
-class BankAccount:
-    """A simple bank account class."""
-
+class Person:
     # Class variable
-    bank_name = "MyBank"
+    species = "Homo sapiens"
 
-    def __init__(self, account_number: str, initial_balance: float = 0.0):
-        self.account_number = account_number
-        self._balance = initial_balance  # Protected attribute
-        self.__pin = None  # Private attribute
+    def __init__(self, name, age):
+        # Instance variables
+        self.name = name
+        self.age = age
 
-    def deposit(self, amount: float) -> None:
-        """Deposit money into the account."""
-        if amount > 0:
-            self._balance += amount
-        else:
-            raise ValueError("Deposit amount must be positive")
+    def introduce(self):
+        return f"Hi, I'm {self.name} and I'm {self.age} years old."
 
-    def withdraw(self, amount: float) -> None:
-        """Withdraw money from the account."""
-        if amount > self._balance:
-            raise ValueError("Insufficient funds")
-        self._balance -= amount
+    def have_birthday(self):
+        self.age += 1
 
-    @property
-    def balance(self) -> float:
-        """Get the current balance."""
-        return self._balance
+    # String representation
+    def __str__(self):
+        return f"Person(name='{self.name}', age={self.age})"
 
-    def __str__(self) -> str:
-        return f"Account {self.account_number}: ${self._balance:.2f}"
+    def __repr__(self):
+        return f"Person('{self.name}', {self.age})"
 
-    def __repr__(self) -> str:
-        return f"BankAccount('{self.account_number}', {self._balance})"
+# Creating objects
+person1 = Person("Alice", 30)
+person2 = Person("Bob", 25)
+
+print(person1.introduce())
+person1.have_birthday()
+print(person1)
 ```
 
 ### Inheritance
 
 ```python
-class SavingsAccount(BankAccount):
-    """A savings account with interest."""
+class Animal:
+    def __init__(self, name):
+        self.name = name
 
-    def __init__(self, account_number: str, initial_balance: float = 0.0,
-                 interest_rate: float = 0.01):
-        super().__init__(account_number, initial_balance)
-        self.interest_rate = interest_rate
+    def speak(self):
+        pass
 
-    def apply_interest(self) -> None:
-        """Apply interest to the account."""
-        interest = self._balance * self.interest_rate
-        self.deposit(interest)
+    def info(self):
+        return f"This is {self.name}"
 
-    def __str__(self) -> str:
-        return f"Savings {super().__str__()} @ {self.interest_rate*100:.1f}%"
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # Call parent constructor
+        self.breed = breed
+
+    def speak(self):
+        return "Woof!"
+
+    def info(self):
+        return f"{super().info()}, a {self.breed}"
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+
+# Usage
+dog = Dog("Buddy", "Golden Retriever")
+cat = Cat("Whiskers")
+
+print(dog.speak())  # Woof!
+print(cat.speak())  # Meow!
+print(dog.info())   # This is Buddy, a Golden Retriever
 ```
 
-### Abstract Base Classes
+### Advanced OOP Concepts
+
+```python
+class BankAccount:
+    def __init__(self, account_number, initial_balance=0):
+        self.account_number = account_number
+        self._balance = initial_balance  # Protected attribute
+        self.__pin = None               # Private attribute
+
+    @property
+    def balance(self):
+        """Getter for balance"""
+        return self._balance
+
+    @balance.setter
+    def balance(self, amount):
+        """Setter for balance with validation"""
+        if amount < 0:
+            raise ValueError("Balance cannot be negative")
+        self._balance = amount
+
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
+
+    def withdraw(self, amount):
+        if 0 < amount <= self._balance:
+            self._balance -= amount
+            return True
+        return False
+
+    @staticmethod
+    def validate_account_number(account_number):
+        """Static method - doesn't need instance"""
+        return len(account_number) == 10
+
+    @classmethod
+    def create_savings_account(cls, account_number):
+        """Class method - alternative constructor"""
+        return cls(account_number, 100)  # Savings starts with $100
+
+# Usage
+account = BankAccount("1234567890", 1000)
+print(account.balance)  # 1000
+account.deposit(500)
+print(account.balance)  # 1500
+
+savings = BankAccount.create_savings_account("0987654321")
+print(BankAccount.validate_account_number("1234567890"))  # True
+```
+
+### Abstract Classes and Interfaces
 
 ```python
 from abc import ABC, abstractmethod
 
-class Vehicle(ABC):
-    """Abstract base class for vehicles."""
-
-    def __init__(self, brand: str, model: str):
-        self.brand = brand
-        self.model = model
-
+class Shape(ABC):
     @abstractmethod
-    def start_engine(self) -> None:
-        """Start the vehicle's engine."""
+    def area(self):
         pass
 
     @abstractmethod
-    def stop_engine(self) -> None:
-        """Stop the vehicle's engine."""
+    def perimeter(self):
         pass
 
-    def honk(self) -> str:
-        """Make a honking sound."""
-        return "Beep beep!"
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
 
-class Car(Vehicle):
-    """Car implementation of Vehicle."""
+    def area(self):
+        return self.width * self.height
 
-    def start_engine(self) -> None:
-        print(f"Starting {self.brand} {self.model} engine...")
+    def perimeter(self):
+        return 2 * (self.width + self.height)
 
-    def stop_engine(self) -> None:
-        print(f"Stopping {self.brand} {self.model} engine...")
-```
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
 
-### Dataclasses
+    def area(self):
+        return 3.14159 * self.radius ** 2
 
-```python
-from dataclasses import dataclass, field
-from typing import List
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
 
-@dataclass
-class Product:
-    """Product dataclass with automatic methods."""
-    name: str
-    price: float
-    quantity: int = 0
-    tags: List[str] = field(default_factory=list)
+# Usage
+rect = Rectangle(5, 3)
+circle = Circle(4)
 
-    def __post_init__(self):
-        """Called after __init__."""
-        if self.price < 0:
-            raise ValueError("Price cannot be negative")
-
-    @property
-    def total_value(self) -> float:
-        """Calculate total value of inventory."""
-        return self.price * self.quantity
-
-@dataclass(frozen=True)  # Immutable dataclass
-class Point:
-    """Immutable point in 2D space."""
-    x: float
-    y: float
-
-    def distance_from_origin(self) -> float:
-        """Calculate distance from origin."""
-        return (self.x**2 + self.y**2)**0.5
-```
-
-### Properties and Descriptors
-
-```python
-class Temperature:
-    """Temperature class with validation."""
-
-    def __init__(self, celsius: float = 0):
-        self._celsius = celsius
-
-    @property
-    def celsius(self) -> float:
-        """Get temperature in Celsius."""
-        return self._celsius
-
-    @celsius.setter
-    def celsius(self, value: float) -> None:
-        """Set temperature in Celsius."""
-        if value < -273.15:
-            raise ValueError("Temperature below absolute zero")
-        self._celsius = value
-
-    @property
-    def fahrenheit(self) -> float:
-        """Get temperature in Fahrenheit."""
-        return (self._celsius * 9/5) + 32
-
-    @fahrenheit.setter
-    def fahrenheit(self, value: float) -> None:
-        """Set temperature in Fahrenheit."""
-        self.celsius = (value - 32) * 5/9
-
-    @property
-    def kelvin(self) -> float:
-        """Get temperature in Kelvin."""
-        return self._celsius + 273.15
+print(f"Rectangle area: {rect.area()}")
+print(f"Circle area: {circle.area()}")
 ```
 
 ---
 
 ## Error Handling
 
-### Exception Types
+### Try-Except Blocks
 
 ```python
-# Built-in exceptions
+# Basic exception handling
 try:
     result = 10 / 0
-except ZeroDivisionError as e:
-    print(f"Division by zero: {e}")
-except ValueError as e:
-    print(f"Invalid value: {e}")
-except TypeError as e:
-    print(f"Type error: {e}")
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+
+# Multiple exceptions
+try:
+    value = int(input("Enter a number: "))
+    result = 10 / value
+except ValueError:
+    print("Invalid input! Please enter a number.")
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+
+# Catching multiple exceptions
+try:
+    # Some risky operation
+    pass
+except (ValueError, TypeError) as e:
+    print(f"Error occurred: {e}")
+
+# Catching all exceptions
+try:
+    # Some risky operation
+    pass
 except Exception as e:
     print(f"Unexpected error: {e}")
+
+# Try-except-else-finally
+try:
+    file = open("data.txt", "r")
+except FileNotFoundError:
+    print("File not found!")
 else:
-    print("No exception occurred")
+    # Executed if no exception occurred
+    content = file.read()
+    print("File read successfully!")
 finally:
-    print("This always executes")
+    # Always executed
+    if 'file' in locals():
+        file.close()
 ```
 
 ### Custom Exceptions
 
 ```python
-class ApplicationError(Exception):
-    """Base exception for application errors."""
+class CustomError(Exception):
+    """Custom exception class"""
     pass
 
-class ValidationError(ApplicationError):
-    """Exception for validation failures."""
+class ValidationError(Exception):
+    """Exception for validation errors"""
+    def __init__(self, message, code=None):
+        super().__init__(message)
+        self.code = code
 
-    def __init__(self, message: str, field: str = None):
-        self.message = message
-        self.field = field
-        super().__init__(self.message)
-
-class DatabaseError(ApplicationError):
-    """Exception for database-related errors."""
-
-    def __init__(self, message: str, query: str = None):
-        self.message = message
-        self.query = query
-        super().__init__(self.message)
+def validate_age(age):
+    if age < 0:
+        raise ValidationError("Age cannot be negative", code="NEGATIVE_AGE")
+    if age > 150:
+        raise ValidationError("Age seems unrealistic", code="UNREALISTIC_AGE")
 
 # Usage
-def validate_email(email: str) -> None:
-    """Validate email format."""
-    if "@" not in email:
-        raise ValidationError("Invalid email format", "email")
-```
-
-### Context Managers for Error Handling
-
-```python
-from contextlib import contextmanager
-
-@contextmanager
-def handle_errors():
-    """Context manager for error handling."""
-    try:
-        yield
-    except ValidationError as e:
-        print(f"Validation error: {e.message}")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        raise
-
-# Usage
-with handle_errors():
-    validate_email("invalid-email")
+try:
+    validate_age(-5)
+except ValidationError as e:
+    print(f"Validation error: {e}")
+    print(f"Error code: {e.code}")
 ```
 
 ---
 
-## File I/O & Path Operations
+## File I/O
 
-### Modern File Operations with Pathlib
+### File Operations
 
 ```python
-from pathlib import Path
+# Reading files
+with open("file.txt", "r") as file:
+    content = file.read()          # Read entire file
 
-# Path creation and manipulation
-current_dir = Path.cwd()
-home_dir = Path.home()
-data_dir = Path("data")
-file_path = data_dir / "users.txt"
+with open("file.txt", "r") as file:
+    lines = file.readlines()       # Read all lines as list
 
-# File operations
-def read_file(file_path: Path) -> str:
-    """Read entire file content."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return file.read()
+with open("file.txt", "r") as file:
+    for line in file:              # Read line by line
+        print(line.strip())
 
-def write_file(file_path: Path, content: str) -> None:
-    """Write content to file."""
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(content)
+# Writing files
+with open("output.txt", "w") as file:
+    file.write("Hello, World!")
 
-def append_to_file(file_path: Path, content: str) -> None:
-    """Append content to file."""
-    with open(file_path, 'a', encoding='utf-8') as file:
-        file.write(content)
+with open("output.txt", "a") as file:  # Append mode
+    file.write("\nNew line")
 
-# File information
-def get_file_info(file_path: Path) -> Dict[str, Any]:
-    """Get file information."""
-    if not file_path.exists():
-        return {"exists": False}
+# Writing multiple lines
+lines = ["Line 1\n", "Line 2\n", "Line 3\n"]
+with open("output.txt", "w") as file:
+    file.writelines(lines)
 
-    stat = file_path.stat()
-    return {
-        "exists": True,
-        "size": stat.st_size,
-        "modified": stat.st_mtime,
-        "is_file": file_path.is_file(),
-        "is_dir": file_path.is_dir(),
-        "extension": file_path.suffix,
-        "stem": file_path.stem
-    }
+# Binary file operations
+with open("image.jpg", "rb") as file:
+    binary_data = file.read()
+
+with open("copy.jpg", "wb") as file:
+    file.write(binary_data)
 ```
 
-### Working with Different File Formats
+### Working with CSV
+
+```python
+import csv
+
+# Reading CSV
+with open("data.csv", "r") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+
+# Reading CSV with headers
+with open("data.csv", "r") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(row["name"], row["age"])
+
+# Writing CSV
+data = [
+    ["Name", "Age", "City"],
+    ["Alice", 30, "New York"],
+    ["Bob", 25, "Los Angeles"]
+]
+
+with open("output.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(data)
+
+# Writing CSV with DictWriter
+fieldnames = ["name", "age", "city"]
+with open("output.csv", "w", newline="") as file:
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerow({"name": "Alice", "age": 30, "city": "New York"})
+```
+
+### JSON Operations
 
 ```python
 import json
-import csv
-from typing import Any, Dict, List
 
-def read_json(file_path: Path) -> Any:
-    """Read JSON file."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return json.load(file)
+# Reading JSON
+with open("data.json", "r") as file:
+    data = json.load(file)
 
-def write_json(file_path: Path, data: Any) -> None:
-    """Write data to JSON file."""
-    with open(file_path, 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent=2, ensure_ascii=False)
+# Writing JSON
+data = {"name": "Alice", "age": 30, "city": "New York"}
+with open("output.json", "w") as file:
+    json.dump(data, file, indent=2)
 
-def read_csv(file_path: Path) -> List[Dict[str, Any]]:
-    """Read CSV file as list of dictionaries."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return list(csv.DictReader(file))
-
-def write_csv(file_path: Path, data: List[Dict[str, Any]]) -> None:
-    """Write data to CSV file."""
-    if not data:
-        return
-
-    with open(file_path, 'w', encoding='utf-8', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=data[0].keys())
-        writer.writeheader()
-        writer.writerows(data)
+# JSON string operations
+json_string = '{"name": "Alice", "age": 30}'
+data = json.loads(json_string)
+json_string = json.dumps(data, indent=2)
 ```
 
 ---
 
-## Iterators & Generators
+## Modules & Packages
+
+### Importing Modules
+
+```python
+# Different ways to import
+import math
+import math as m
+from math import sqrt, pi
+from math import *  # Not recommended
+
+# Using imported modules
+print(math.sqrt(16))  # 4.0
+print(m.pi)          # 3.141592653589793
+print(sqrt(25))      # 5.0
+
+# Importing from packages
+from collections import defaultdict, Counter
+from datetime import datetime, timedelta
+```
+
+### Creating Modules
+
+```python
+# mymodule.py
+def greet(name):
+    return f"Hello, {name}!"
+
+def add(a, b):
+    return a + b
+
+PI = 3.14159
+
+if __name__ == "__main__":
+    # Code that runs only when module is executed directly
+    print("Module is being run directly")
+```
+
+### Package Structure
+
+```
+mypackage/
+    __init__.py
+    module1.py
+    module2.py
+    subpackage/
+        __init__.py
+        submodule.py
+```
+
+```python
+# __init__.py
+from .module1 import function1
+from .module2 import function2
+
+__all__ = ['function1', 'function2']
+```
+
+---
+
+## Built-in Functions
+
+### Essential Built-ins
+
+```python
+# Type and conversion functions
+print(type(42))           # <class 'int'>
+print(isinstance(42, int)) # True
+print(int("42"))          # 42
+print(float(42))          # 42.0
+print(str(42))            # "42"
+print(bool(0))            # False
+
+# Sequence functions
+numbers = [1, 2, 3, 4, 5]
+print(len(numbers))       # 5
+print(max(numbers))       # 5
+print(min(numbers))       # 1
+print(sum(numbers))       # 15
+print(sorted(numbers, reverse=True))  # [5, 4, 3, 2, 1]
+
+# Range and enumerate
+for i in range(5):
+    print(i)
+
+for index, value in enumerate(["a", "b", "c"]):
+    print(index, value)
+
+# Zip
+names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+for name, age in zip(names, ages):
+    print(f"{name} is {age} years old")
+
+# Map, filter, reduce
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+even = list(filter(lambda x: x % 2 == 0, numbers))
+
+from functools import reduce
+product = reduce(lambda x, y: x * y, numbers)  # 120
+
+# Any and all
+print(any([True, False, False]))   # True
+print(all([True, True, False]))    # False
+
+# Abs, round, pow
+print(abs(-5))        # 5
+print(round(3.14159, 2))  # 3.14
+print(pow(2, 3))      # 8
+```
+
+---
+
+## List/Dict/Set Comprehensions
+
+### List Comprehensions
+
+```python
+# Basic list comprehension
+squares = [x**2 for x in range(10)]
+# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+# With condition
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+# [0, 4, 16, 36, 64]
+
+# Nested comprehensions
+matrix = [[i*j for j in range(3)] for i in range(3)]
+# [[0, 0, 0], [0, 1, 2], [0, 2, 4]]
+
+# Flattening a matrix
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [num for row in matrix for num in row]
+# [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# String manipulation
+words = ["hello", "world", "python"]
+upper_words = [word.upper() for word in words]
+# ['HELLO', 'WORLD', 'PYTHON']
+```
+
+### Dictionary Comprehensions
+
+```python
+# Basic dictionary comprehension
+squares = {x: x**2 for x in range(5)}
+# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+# With condition
+even_squares = {x: x**2 for x in range(10) if x % 2 == 0}
+# {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+
+# From two lists
+keys = ["a", "b", "c"]
+values = [1, 2, 3]
+dict_from_lists = {k: v for k, v in zip(keys, values)}
+# {'a': 1, 'b': 2, 'c': 3}
+
+# Transforming existing dictionary
+original = {"a": 1, "b": 2, "c": 3}
+doubled = {k: v*2 for k, v in original.items()}
+# {'a': 2, 'b': 4, 'c': 6}
+```
+
+### Set Comprehensions
+
+```python
+# Basic set comprehension
+unique_squares = {x**2 for x in range(-5, 6)}
+# {0, 1, 4, 9, 16, 25}
+
+# With condition
+even_nums = {x for x in range(20) if x % 2 == 0}
+# {0, 2, 4, 6, 8, 10, 12, 14, 16, 18}
+```
+
+---
+
+## Generators & Iterators
 
 ### Generators
 
 ```python
-def fibonacci(n: int) -> Generator[int, None, None]:
-    """Generate Fibonacci sequence."""
+# Generator function
+def count_up_to(max_count):
+    count = 1
+    while count <= max_count:
+        yield count
+        count += 1
+
+# Using generator
+counter = count_up_to(3)
+for num in counter:
+    print(num)  # 1, 2, 3
+
+# Generator expression
+squares = (x**2 for x in range(10))
+print(next(squares))  # 0
+print(next(squares))  # 1
+
+# Infinite generator
+def fibonacci():
     a, b = 0, 1
-    for _ in range(n):
+    while True:
         yield a
         a, b = b, a + b
 
-def read_large_file(file_path: Path) -> Generator[str, None, None]:
-    """Read large file line by line."""
-    with open(file_path, 'r') as file:
-        for line in file:
-            yield line.strip()
-
-# Generator expressions
-squares = (x**2 for x in range(1000000))  # Memory efficient
-filtered_data = (item for item in data if condition(item))
+fib = fibonacci()
+for _ in range(10):
+    print(next(fib))  # First 10 Fibonacci numbers
 ```
 
-### Custom Iterators
+### Iterators
 
 ```python
-class Range:
-    """Custom range iterator."""
-
-    def __init__(self, start: int, end: int, step: int = 1):
+# Custom iterator
+class CountDown:
+    def __init__(self, start):
         self.start = start
-        self.end = end
-        self.step = step
-
-    def __iter__(self):
-        return RangeIterator(self.start, self.end, self.step)
-
-class RangeIterator:
-    """Iterator for Range class."""
-
-    def __init__(self, start: int, end: int, step: int):
-        self.current = start
-        self.end = end
-        self.step = step
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if self.current >= self.end:
+        if self.start <= 0:
             raise StopIteration
-        value = self.current
-        self.current += self.step
-        return value
+        self.start -= 1
+        return self.start + 1
+
+# Usage
+countdown = CountDown(3)
+for num in countdown:
+    print(num)  # 3, 2, 1
+
+# Using itertools
+import itertools
+
+# Infinite iterators
+counter = itertools.count(1, 2)  # 1, 3, 5, 7, ...
+repeater = itertools.repeat("hello", 3)  # "hello", "hello", "hello"
+
+# Finite iterators
+numbers = [1, 2, 3, 4, 5]
+accumulated = list(itertools.accumulate(numbers))  # [1, 3, 6, 10, 15]
+combinations = list(itertools.combinations(numbers, 2))  # [(1, 2), (1, 3), ...]
 ```
 
 ---
 
-## Functional Programming
+## Decorators
 
-### Higher-Order Functions
+### Basic Decorators
 
 ```python
-from functools import reduce, partial
+# Simple decorator
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
 
-# Map, filter, reduce
-numbers = [1, 2, 3, 4, 5]
-squared = list(map(lambda x: x**2, numbers))
-evens = list(filter(lambda x: x % 2 == 0, numbers))
-sum_all = reduce(lambda x, y: x + y, numbers)
+@my_decorator
+def say_hello():
+    print("Hello!")
 
-# Partial application
-def power(base: int, exponent: int) -> int:
-    """Calculate base raised to exponent."""
-    return base ** exponent
+# Equivalent to: say_hello = my_decorator(say_hello)
+say_hello()
 
-square = partial(power, exponent=2)
-cube = partial(power, exponent=3)
+# Decorator with arguments
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__}")
+        result = func(*args, **kwargs)
+        print(f"Finished calling {func.__name__}")
+        return result
+    return wrapper
 
-# Function composition
-def compose(*functions):
-    """Compose multiple functions."""
-    return reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
+@my_decorator
+def add(a, b):
+    return a + b
 
-# Usage
-add_one = lambda x: x + 1
-multiply_by_two = lambda x: x * 2
-add_one_then_double = compose(multiply_by_two, add_one)
+result = add(5, 3)
 ```
 
-### Functional Programming Patterns
+### Advanced Decorators
 
 ```python
-from typing import Callable, TypeVar
+import functools
+import time
+
+# Decorator with parameters
+def repeat(times):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for _ in range(times):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+
+@repeat(3)
+def greet(name):
+    print(f"Hello, {name}!")
+
+# Timing decorator
+def timing_decorator(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"{func.__name__} took {end_time - start_time:.4f} seconds")
+        return result
+    return wrapper
+
+@timing_decorator
+def slow_function():
+    time.sleep(1)
+    return "Done"
+
+# Class-based decorator
+class CallCounter:
+    def __init__(self, func):
+        self.func = func
+        self.count = 0
+
+    def __call__(self, *args, **kwargs):
+        self.count += 1
+        print(f"{self.func.__name__} has been called {self.count} times")
+        return self.func(*args, **kwargs)
+
+@CallCounter
+def say_hello():
+    print("Hello!")
+
+# Property decorator
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("Radius cannot be negative")
+        self._radius = value
+
+    @property
+    def area(self):
+        return 3.14159 * self._radius ** 2
+```
+
+---
+
+## Context Managers
+
+### Using Context Managers
+
+```python
+# File handling with context manager
+with open("file.txt", "r") as file:
+    content = file.read()
+# File is automatically closed
+
+# Multiple context managers
+with open("input.txt", "r") as infile, open("output.txt", "w") as outfile:
+    content = infile.read()
+    outfile.write(content.upper())
+```
+
+### Creating Context Managers
+
+```python
+# Using contextlib
+from contextlib import contextmanager
+
+@contextmanager
+def my_context():
+    print("Entering context")
+    try:
+        yield "Hello from context"
+    finally:
+        print("Exiting context")
+
+with my_context() as value:
+    print(value)
+
+# Class-based context manager
+class DatabaseConnection:
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
+        self.connection = None
+
+    def __enter__(self):
+        print(f"Connecting to {self.host}:{self.port}")
+        self.connection = f"Connected to {self.host}:{self.port}"
+        return self.connection
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("Closing database connection")
+        self.connection = None
+
+# Usage
+with DatabaseConnection("localhost", 5432) as conn:
+    print(f"Using connection: {conn}")
+
+# Context manager for timing
+@contextmanager
+def timer():
+    start = time.time()
+    try:
+        yield
+    finally:
+        end = time.time()
+        print(f"Execution took {end - start:.4f} seconds")
+
+with timer():
+    # Some time-consuming operation
+    sum(range(1000000))
+```
+
+---
+
+## Regular Expressions
+
+### Basic Regex Operations
+
+```python
+import re
+
+# Basic matching
+text = "Hello, World! My phone number is 123-456-7890."
+pattern = r"\d{3}-\d{3}-\d{4}"
+match = re.search(pattern, text)
+if match:
+    print(f"Found: {match.group()}")  # Found: 123-456-7890
+
+# Finding all matches
+text = "Email me at john@example.com or jane@test.org"
+pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+emails = re.findall(pattern, text)
+print(emails)  # ['john@example.com', 'jane@test.org']
+
+# Substitution
+text = "The price is $100 and the tax is $10"
+pattern = r"\$(\d+)"
+new_text = re.sub(pattern, r"£\1", text)
+print(new_text)  # The price is £100 and the tax is £10
+
+# Splitting
+text = "apple,banana;orange:grape"
+fruits = re.split(r"[,;:]", text)
+print(fruits)  # ['apple', 'banana', 'orange', 'grape']
+```
+
+### Advanced Regex
+
+```python
+# Compiled patterns (more efficient for repeated use)
+pattern = re.compile(r"\d+")
+matches = pattern.findall("I have 5 apples and 3 oranges")
+print(matches)  # ['5', '3']
+
+# Groups and capturing
+text = "John Smith (age 30) and Jane Doe (age 25)"
+pattern = r"(\w+) (\w+) \(age (\d+)\)"
+matches = re.findall(pattern, text)
+for match in matches:
+    first, last, age = match
+    print(f"{first} {last} is {age} years old")
+
+# Named groups
+pattern = r"(?P<first>\w+) (?P<last>\w+) \(age (?P<age>\d+)\)"
+for match in re.finditer(pattern, text):
+    print(f"{match.group('first')} {match.group('last')} is {match.group('age')}")
+
+# Lookahead and lookbehind
+text = "password123, password456, pass123"
+# Positive lookahead: match "password" only if followed by digits
+pattern = r"password(?=\d+)"
+matches = re.findall(pattern, text)
+print(matches)  # ['password', 'password']
+
+# Common regex patterns
+patterns = {
+    "email": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b",
+    "phone": r"\b\d{3}-\d{3}-\d{4}\b",
+    "url": r"https?://(?:[-\w.])+(?:\:[0-9]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:\#(?:[\w.])*)?)?",
+    "ip_address": r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b",
+    "credit_card": r"\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b",
+    "date": r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b"
+}
+```
+
+---
+
+## Testing
+
+### Unit Testing with unittest
+
+```python
+import unittest
+
+def add(a, b):
+    return a + b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+
+class TestMathFunctions(unittest.TestCase):
+
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)
+        self.assertEqual(add(-1, 1), 0)
+        self.assertEqual(add(0, 0), 0)
+
+    def test_divide(self):
+        self.assertEqual(divide(10, 2), 5)
+        self.assertEqual(divide(9, 3), 3)
+
+        # Test exception
+        with self.assertRaises(ValueError):
+            divide(10, 0)
+
+    def setUp(self):
+        """Run before each test method"""
+        self.test_data = [1, 2, 3, 4, 5]
+
+    def tearDown(self):
+        """Run after each test method"""
+        pass
+
+    def test_list_operations(self):
+        self.assertIn(3, self.test_data)
+        self.assertNotIn(10, self.test_data)
+        self.assertEqual(len(self.test_data), 5)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### Testing with pytest
+
+```python
+import pytest
+
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+
+def test_divide():
+    assert divide(10, 2) == 5
+    assert divide(9, 3) == 3
+
+    with pytest.raises(ValueError):
+        divide(10, 0)
+
+# Fixtures
+@pytest.fixture
+def sample_data():
+    return [1, 2, 3, 4, 5]
+
+def test_with_fixture(sample_data):
+    assert len(sample_data) == 5
+    assert 3 in sample_data
+
+# Parametrized tests
+@pytest.mark.parametrize("a,b,expected", [
+    (2, 3, 5),
+    (-1, 1, 0),
+    (0, 0, 0),
+])
+def test_add_parametrized(a, b, expected):
+    assert add(a, b) == expected
+```
+
+### Mocking
+
+```python
+from unittest.mock import Mock, patch
+
+# Mock object
+mock_obj = Mock()
+mock_obj.method.return_value = "mocked result"
+result = mock_obj.method()
+print(result)  # mocked result
+
+# Patching
+import requests
+
+def get_user_data(user_id):
+    response = requests.get(f"https://api.example.com/users/{user_id}")
+    return response.json()
+
+# Test with mock
+@patch('requests.get')
+def test_get_user_data(mock_get):
+    mock_response = Mock()
+    mock_response.json.return_value = {"name": "John", "id": 123}
+    mock_get.return_value = mock_response
+
+    result = get_user_data(123)
+    assert result["name"] == "John"
+    mock_get.assert_called_once_with("https://api.example.com/users/123")
+```
+
+---
+
+## Performance & Optimization
+
+### Measuring Performance
+
+```python
+import time
+import timeit
+from functools import wraps
+
+# Simple timing
+start = time.time()
+# Some operation
+sum(range(1000000))
+end = time.time()
+print(f"Execution time: {end - start:.4f} seconds")
+
+# Using timeit
+execution_time = timeit.timeit(lambda: sum(range(1000)), number=10000)
+print(f"Average execution time: {execution_time/10000:.6f} seconds")
+
+# Profiling decorator
+def profile(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} took {end - start:.4f} seconds")
+        return result
+    return wrapper
+
+@profile
+def slow_function():
+    return sum(range(1000000))
+```
+
+### Memory Optimization
+
+```python
+import sys
+from collections import deque
+
+# Check memory usage
+numbers = [1, 2, 3, 4, 5]
+print(f"Size of list: {sys.getsizeof(numbers)} bytes")
+
+# Use generators for large datasets
+def large_dataset():
+    for i in range(1000000):
+        yield i * 2
+
+# Memory-efficient operations
+# Use deque for frequent insertions/deletions at both ends
+d = deque([1, 2, 3, 4, 5])
+d.appendleft(0)  # O(1) operation
+d.pop()          # O(1) operation
+
+# Use __slots__ to reduce memory usage in classes
+class Point:
+    __slots__ = ['x', 'y']
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+# String concatenation optimization
+# Bad: O(n²) complexity
+result = ""
+for i in range(1000):
+    result += str(i)
+
+# Good: O(n) complexity
+result = "".join(str(i) for i in range(1000))
+```
+
+### Algorithm Optimization
+
+```python
+import bisect
+from collections import Counter, defaultdict
+
+# Use set for membership testing (O(1) vs O(n))
+large_list = list(range(10000))
+large_set = set(large_list)
+
+# Slow: O(n)
+if 5000 in large_list:
+    pass
+
+# Fast: O(1)
+if 5000 in large_set:
+    pass
+
+# Use bisect for sorted lists
+sorted_list = [1, 3, 5, 7, 9, 11, 13, 15]
+index = bisect.bisect_left(sorted_list, 7)  # O(log n)
+
+# Use Counter for counting
+items = ["apple", "banana", "apple", "orange", "banana", "apple"]
+count = Counter(items)
+print(count.most_common(2))  # [('apple', 3), ('banana', 2)]
+
+# Use defaultdict to avoid key checks
+dd = defaultdict(list)
+dd['key'].append('value')  # No need to check if key exists
+```
+
+---
+
+## Professional Best Practices
+
+### Code Organization
+
+```python
+# Module structure
+"""
+Module docstring explaining the purpose of the module.
+"""
+
+__version__ = "1.0.0"
+__author__ = "Your Name"
+__email__ = "your.email@example.com"
+
+# Standard library imports
+import os
+import sys
+from datetime import datetime
+
+# Third-party imports
+import requests
+import numpy as np
+
+# Local imports
+from .utils import helper_function
+from .models import User
+
+# Constants
+DEFAULT_TIMEOUT = 30
+MAX_RETRIES = 3
+
+# Module-level variables
+logger = logging.getLogger(__name__)
+
+class MyClass:
+    """Class docstring."""
+
+    def __init__(self):
+        """Initialize the class."""
+        pass
+
+    def public_method(self):
+        """Public method docstring."""
+        return self._private_method()
+
+    def _private_method(self):
+        """Private method (convention)."""
+        return "private"
+
+def main():
+    """Main function."""
+    pass
+
+if __name__ == "__main__":
+    main()
+```
+
+### Error Handling Best Practices
+
+```python
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def robust_function(data):
+    """
+    A function that handles errors gracefully.
+
+    Args:
+        data: Input data to process
+
+    Returns:
+        Processed data
+
+    Raises:
+        ValueError: If data is invalid
+        TypeError: If data is wrong type
+    """
+    if not isinstance(data, (list, tuple)):
+        raise TypeError("Data must be a list or tuple")
+
+    if not data:
+        raise ValueError("Data cannot be empty")
+
+    try:
+        result = process_data(data)
+        logger.info(f"Successfully processed {len(data)} items")
+        return result
+    except Exception as e:
+        logger.error(f"Error processing data: {e}")
+        raise
+    finally:
+        # Cleanup code here
+        pass
+
+def process_data(data):
+    """Process the data."""
+    return [item * 2 for item in data]
+
+# Configuration management
+class Config:
+    """Configuration class."""
+
+    def __init__(self):
+        self.debug = os.getenv("DEBUG", "False").lower() == "true"
+        self.database_url = os.getenv("DATABASE_URL", "sqlite:///default.db")
+        self.api_key = os.getenv("API_KEY")
+
+        if not self.api_key:
+            raise ValueError("API_KEY environment variable is required")
+
+config = Config()
+```
+
+### Type Hints and Documentation
+
+```python
+from typing import List, Dict, Optional, Union, Callable, Any
+from dataclasses import dataclass
+from enum import Enum
+
+class Status(Enum):
+    """Status enumeration."""
+    PENDING = "pending"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+@dataclass
+class User:
+    """User data class."""
+    id: int
+    name: str
+    email: str
+    age: Optional[int] = None
+    is_active: bool = True
+
+def process_users(
+    users: List[User],
+    filter_func: Optional[Callable[[User], bool]] = None,
+    sort_key: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Process a list of users.
+
+    Args:
+        users: List of User objects to process
+        filter_func: Optional function to filter users
+        sort_key: Optional attribute name to sort by
+
+    Returns:
+        Dictionary containing processing results
+
+    Example:
+        >>> users = [User(1, "Alice", "alice@example.com")]
+        >>> result = process_users(users, sort_key="name")
+        >>> print(result["count"])
+        1
+    """
+    if filter_func:
+        users = [user for user in users if filter_func(user)]
+
+    if sort_key:
+        users.sort(key=lambda u: getattr(u, sort_key))
+
+    return {
+        "count": len(users),
+        "users": users,
+        "processed_at": datetime.now().isoformat()
+    }
+
+# Generic type hints
+from typing import TypeVar, Generic
 
 T = TypeVar('T')
-U = TypeVar('U')
 
-def map_function(func: Callable[[T], U], items: List[T]) -> List[U]:
-    """Functional map implementation."""
-    return [func(item) for item in items]
+class Stack(Generic[T]):
+    """Generic stack implementation."""
 
-def filter_function(predicate: Callable[[T], bool], items: List[T]) -> List[T]:
-    """Functional filter implementation."""
-    return [item for item in items if predicate(item)]
+    def __init__(self) -> None:
+        self._items: List[T] = []
 
-def reduce_function(func: Callable[[T, T], T], items: List[T], initial: T = None) -> T:
-    """Functional reduce implementation."""
-    iterator = iter(items)
-    if initial is None:
-        result = next(iterator)
-    else:
-        result = initial
+    def push(self, item: T) -> None:
+        """Push an item onto the stack."""
+        self._items.append(item)
 
-    for item in iterator:
-        result = func(result, item)
-    return result
+    def pop(self) -> T:
+        """Pop an item from the stack."""
+        if not self._items:
+            raise IndexError("Stack is empty")
+        return self._items.pop()
+
+    def peek(self) -> T:
+        """Peek at the top item without removing it."""
+        if not self._items:
+            raise IndexError("Stack is empty")
+        return self._items[-1]
 ```
 
 ---
 
-## Concurrency & Parallelism
+## Code Style & Standards
 
-### Threading
+### PEP 8 Guidelines
 
 ```python
-import threading
-import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+# Good naming conventions
+class UserManager:  # PascalCase for classes
+    def __init__(self):
+        self.user_count = 0  # snake_case for variables
+        self._private_attr = None  # Leading underscore for private
+        self.__very_private = None  # Double underscore for name mangling
 
-def worker_function(name: str, duration: int) -> str:
-    """Worker function for threading example."""
-    print(f"Worker {name} starting")
-    time.sleep(duration)
-    print(f"Worker {name} finished")
-    return f"Result from {name}"
+    def get_user_by_id(self, user_id):  # snake_case for functions
+        """Get user by ID."""
+        pass
 
-# Basic threading
-def basic_threading():
-    """Demonstrate basic threading."""
-    threads = []
-    for i in range(3):
-        t = threading.Thread(target=worker_function, args=(f"Thread-{i}", i+1))
-        threads.append(t)
-        t.start()
+    def _helper_method(self):  # Private method
+        """Helper method."""
+        pass
 
-    for t in threads:
-        t.join()
+# Constants
+MAX_CONNECTIONS = 100
+DEFAULT_TIMEOUT = 30
 
-# ThreadPoolExecutor
-def thread_pool_example():
-    """Demonstrate ThreadPoolExecutor."""
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        futures = [executor.submit(worker_function, f"Worker-{i}", i+1)
-                  for i in range(5)]
+# Good spacing and formatting
+def calculate_total(items, tax_rate=0.1, discount=0.0):
+    """Calculate total with tax and discount."""
+    subtotal = sum(item.price for item in items)
+    discount_amount = subtotal * discount
+    taxable_amount = subtotal - discount_amount
+    tax_amount = taxable_amount * tax_rate
+    total = taxable_amount + tax_amount
 
-        for future in as_completed(futures):
-            result = future.result()
-            print(f"Got result: {result}")
+    return {
+        'subtotal': subtotal,
+        'discount': discount_amount,
+        'tax': tax_amount,
+        'total': total
+    }
+
+# Line length and formatting
+very_long_variable_name = some_function_with_a_very_long_name(
+    first_argument,
+    second_argument,
+    third_argument,
+    fourth_argument
+)
+
+# List formatting
+items = [
+    'first_item',
+    'second_item',
+    'third_item',
+    'fourth_item',
+]
+
+# Dictionary formatting
+config = {
+    'database_url': 'postgresql://localhost/mydb',
+    'redis_url': 'redis://localhost:6379',
+    'debug': True,
+    'max_connections': 100,
+}
 ```
 
-### Async/Await
+### Code Quality Tools
 
 ```python
-import asyncio
-from typing import List
+# Using black for formatting
+# pip install black
+# black my_file.py
 
-async def fetch_data(url: str, delay: float = 1.0) -> str:
-    """Simulate fetching data from URL."""
-    await asyncio.sleep(delay)
-    return f"Data from {url}"
+# Using flake8 for linting
+# pip install flake8
+# flake8 my_file.py
 
-async def fetch_multiple_urls(urls: List[str]) -> List[str]:
-    """Fetch data from multiple URLs concurrently."""
-    tasks = [fetch_data(url) for url in urls]
-    results = await asyncio.gather(*tasks)
-    return results
+# Using mypy for type checking
+# pip install mypy
+# mypy my_file.py
 
-# Context manager for async operations
-class AsyncContextManager:
-    """Async context manager example."""
+# Using isort for import sorting
+# pip install isort
+# isort my_file.py
 
-    async def __aenter__(self):
-        print("Entering async context")
-        await asyncio.sleep(0.1)
-        return self
+# Configuration in pyproject.toml
+"""
+[tool.black]
+line-length = 88
+target-version = ['py39']
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        print("Exiting async context")
-        await asyncio.sleep(0.1)
+[tool.isort]
+profile = "black"
+multi_line_output = 3
 
-# Usage
-async def main():
-    """Main async function."""
-    urls = ["http://example.com", "http://google.com", "http://github.com"]
-
-    async with AsyncContextManager():
-        results = await fetch_multiple_urls(urls)
-        for result in results:
-            print(result)
-
-# Run async code
-# asyncio.run(main())
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+"""
 ```
 
 ---
 
-## Advanced Features
+## Advanced Topics
 
 ### Metaclasses
 
 ```python
 class SingletonMeta(type):
-    """Metaclass for singleton pattern."""
+    """Metaclass that creates a Singleton base class."""
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
@@ -831,16 +1771,15 @@ class SingletonMeta(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 
-class Database(metaclass=SingletonMeta):
+class DatabaseConnection(metaclass=SingletonMeta):
     """Singleton database connection."""
 
     def __init__(self):
-        self.connection = "database_connection"
-        print("Database connection created")
+        self.connection = "Connected to database"
 
 # Usage
-db1 = Database()
-db2 = Database()
+db1 = DatabaseConnection()
+db2 = DatabaseConnection()
 print(db1 is db2)  # True
 ```
 
@@ -848,11 +1787,11 @@ print(db1 is db2)  # True
 
 ```python
 class ValidatedAttribute:
-    """Descriptor for validated attributes."""
+    """Descriptor that validates attribute values."""
 
-    def __init__(self, validator: Callable[[Any], bool], name: str = None):
+    def __init__(self, validator):
         self.validator = validator
-        self.name = name
+        self.name = None
 
     def __set_name__(self, owner, name):
         self.name = name
@@ -867,371 +1806,351 @@ class ValidatedAttribute:
             raise ValueError(f"Invalid value for {self.name}: {value}")
         instance.__dict__[self.name] = value
 
-# Validators
-def positive_number(value):
-    """Validate positive number."""
-    return isinstance(value, (int, float)) and value > 0
+class Person:
+    name = ValidatedAttribute(lambda x: isinstance(x, str) and len(x) > 0)
+    age = ValidatedAttribute(lambda x: isinstance(x, int) and 0 <= x <= 150)
 
-def non_empty_string(value):
-    """Validate non-empty string."""
-    return isinstance(value, str) and len(value.strip()) > 0
-
-# Usage
-class Product:
-    """Product with validated attributes."""
-    name = ValidatedAttribute(non_empty_string)
-    price = ValidatedAttribute(positive_number)
-
-    def __init__(self, name: str, price: float):
+    def __init__(self, name, age):
         self.name = name
-        self.price = price
-```
-
-### Protocol (Structural Typing)
-
-```python
-from typing import Protocol
-
-class Drawable(Protocol):
-    """Protocol for drawable objects."""
-
-    def draw(self) -> None:
-        """Draw the object."""
-        ...
-
-class Circle:
-    """Circle that implements Drawable protocol."""
-
-    def __init__(self, radius: float):
-        self.radius = radius
-
-    def draw(self) -> None:
-        print(f"Drawing circle with radius {self.radius}")
-
-class Square:
-    """Square that implements Drawable protocol."""
-
-    def __init__(self, side: float):
-        self.side = side
-
-    def draw(self) -> None:
-        print(f"Drawing square with side {self.side}")
-
-def draw_shape(shape: Drawable) -> None:
-    """Draw any shape that implements Drawable protocol."""
-    shape.draw()
-```
-
----
-
-## Testing & Debugging
-
-### Unit Testing
-
-```python
-import unittest
-from unittest.mock import Mock, patch
-
-class Calculator:
-    """Simple calculator class."""
-
-    def add(self, a: int, b: int) -> int:
-        return a + b
-
-    def divide(self, a: int, b: int) -> float:
-        if b == 0:
-            raise ValueError("Cannot divide by zero")
-        return a / b
-
-class TestCalculator(unittest.TestCase):
-    """Test cases for Calculator."""
-
-    def setUp(self):
-        """Set up test fixtures."""
-        self.calculator = Calculator()
-
-    def test_add(self):
-        """Test addition."""
-        result = self.calculator.add(2, 3)
-        self.assertEqual(result, 5)
-
-    def test_divide(self):
-        """Test division."""
-        result = self.calculator.divide(10, 2)
-        self.assertEqual(result, 5.0)
-
-    def test_divide_by_zero(self):
-        """Test division by zero."""
-        with self.assertRaises(ValueError):
-            self.calculator.divide(10, 0)
-
-    @patch('builtins.print')
-    def test_with_mock(self, mock_print):
-        """Test with mock."""
-        mock_print.return_value = None
-        print("Hello, World!")
-        mock_print.assert_called_once_with("Hello, World!")
-```
-
-### Debugging Tools
-
-```python
-import pdb
-import traceback
-
-def debug_function(x: int) -> int:
-    """Function with debugging."""
-    # Set breakpoint
-    # pdb.set_trace()
-
-    result = x * 2
-    return result
-
-def handle_exceptions():
-    """Exception handling with traceback."""
-    try:
-        result = 10 / 0
-    except Exception as e:
-        print(f"Error: {e}")
-        print("Traceback:")
-        traceback.print_exc()
-
-# Assertions for debugging
-def validate_input(value: int) -> None:
-    """Validate input with assertions."""
-    assert isinstance(value, int), f"Expected int, got {type(value)}"
-    assert value > 0, f"Expected positive value, got {value}"
-```
-
----
-
-## Performance & Optimization
-
-### Caching
-
-```python
-from functools import lru_cache
-import time
-
-@lru_cache(maxsize=128)
-def fibonacci(n: int) -> int:
-    """Fibonacci with caching."""
-    if n < 2:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-# Manual caching
-cache = {}
-
-def fibonacci_manual(n: int) -> int:
-    """Fibonacci with manual caching."""
-    if n in cache:
-        return cache[n]
-
-    if n < 2:
-        result = n
-    else:
-        result = fibonacci_manual(n-1) + fibonacci_manual(n-2)
-
-    cache[n] = result
-    return result
-```
-
-### Timing and Profiling
-
-```python
-import time
-import cProfile
-import timeit
-
-def time_function(func, *args, **kwargs):
-    """Time function execution."""
-    start = time.perf_counter()
-    result = func(*args, **kwargs)
-    end = time.perf_counter()
-    print(f"{func.__name__} took {end - start:.4f} seconds")
-    return result
-
-# Context manager for timing
-@contextmanager
-def timer():
-    """Context manager for timing code blocks."""
-    start = time.perf_counter()
-    try:
-        yield
-    finally:
-        end = time.perf_counter()
-        print(f"Elapsed time: {end - start:.4f} seconds")
+        self.age = age
 
 # Usage
-with timer():
-    time.sleep(1)
-
-# Using timeit
-def test_function():
-    """Function to test."""
-    return sum(range(1000))
-
-execution_time = timeit.timeit(test_function, number=10000)
-print(f"Average execution time: {execution_time/10000:.6f} seconds")
+person = Person("Alice", 30)
+# person.age = -5  # Raises ValueError
 ```
 
-### Memory Optimization
+### Async Programming
 
 ```python
-import sys
-from typing import Iterator
+import asyncio
+import aiohttp
 
-def memory_efficient_processing(data: Iterator[str]) -> Iterator[str]:
-    """Process data in memory-efficient way."""
-    for item in data:
-        # Process item
-        processed = item.upper().strip()
-        yield processed
+async def fetch_url(session, url):
+    """Fetch a single URL."""
+    async with session.get(url) as response:
+        return await response.text()
 
-# Using slots for memory efficiency
-class Point:
-    """Memory-efficient Point class."""
-    __slots__ = ['x', 'y']
+async def fetch_multiple_urls(urls):
+    """Fetch multiple URLs concurrently."""
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_url(session, url) for url in urls]
+        results = await asyncio.gather(*tasks)
+        return results
 
-    def __init__(self, x: float, y: float):
-        self.x = x
-        self.y = y
+# Generator-based coroutines
+async def async_generator():
+    """Async generator example."""
+    for i in range(5):
+        await asyncio.sleep(0.1)
+        yield i
 
-# Generator expressions vs list comprehensions
-# Memory efficient
-data_gen = (x**2 for x in range(1000000))
+async def main():
+    """Main async function."""
+    # Using async generator
+    async for value in async_generator():
+        print(value)
 
-# Memory intensive
-# data_list = [x**2 for x in range(1000000)]
+    # Concurrent execution
+    urls = ["http://example.com", "http://google.com"]
+    results = await fetch_multiple_urls(urls)
+    print(f"Fetched {len(results)} URLs")
+
+# Run async code
+# asyncio.run(main())
 ```
 
----
-
-## Logging
-
-### Logging Setup
+### Data Classes and Enums
 
 ```python
-import logging
-from logging.handlers import RotatingFileHandler
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import List
+import json
 
-# Basic logging configuration
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('app.log'),
-        logging.StreamHandler()
-    ]
+class Priority(Enum):
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
+
+class Status(Enum):
+    TODO = auto()
+    IN_PROGRESS = auto()
+    DONE = auto()
+
+@dataclass
+class Task:
+    title: str
+    description: str = ""
+    priority: Priority = Priority.MEDIUM
+    status: Status = Status.TODO
+    tags: List[str] = field(default_factory=list)
+
+    def __post_init__(self):
+        """Called after initialization."""
+        if not self.title:
+            raise ValueError("Title cannot be empty")
+
+    def to_dict(self):
+        """Convert to dictionary."""
+        return {
+            'title': self.title,
+            'description': self.description,
+            'priority': self.priority.value,
+            'status': self.status.name,
+            'tags': self.tags
+        }
+
+# Usage
+task = Task(
+    title="Learn Python",
+    description="Complete Python tutorial",
+    priority=Priority.HIGH,
+    tags=["learning", "python"]
 )
 
-# Custom logger
-logger = logging.getLogger(__name__)
+print(task.to_dict())
+```
 
-def setup_logging(log_level: str = "INFO", log_file: str = "app.log"):
-    """Set up logging configuration."""
-    numeric_level = getattr(logging, log_level.upper())
+### Working with APIs
 
-    # Create formatter
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
+```python
+import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
-    # File handler with rotation
-    file_handler = RotatingFileHandler(
-        log_file, maxBytes=10*1024*1024, backupCount=5
-    )
-    file_handler.setFormatter(formatter)
+class APIClient:
+    """Robust API client with retry logic."""
 
-    # Console handler
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
+    def __init__(self, base_url, api_key):
+        self.base_url = base_url
+        self.session = requests.Session()
 
-    # Configure root logger
-    root_logger = logging.getLogger()
-    root_logger.setLevel(numeric_level)
-    root_logger.addHandler(file_handler)
-    root_logger.addHandler(console_handler)
+        # Set up retry strategy
+        retry_strategy = Retry(
+            total=3,
+            backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+        )
+
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        self.session.mount("http://", adapter)
+        self.session.mount("https://", adapter)
+
+        # Set default headers
+        self.session.headers.update({
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json',
+            'User-Agent': 'MyApp/1.0'
+        })
+
+    def get(self, endpoint, params=None):
+        """Make GET request."""
+        url = f"{self.base_url}/{endpoint}"
+        response = self.session.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+
+    def post(self, endpoint, data=None):
+        """Make POST request."""
+        url = f"{self.base_url}/{endpoint}"
+        response = self.session.post(url, json=data)
+        response.raise_for_status()
+        return response.json()
 
 # Usage
-def process_data(data: List[Any]) -> None:
-    """Process data with logging."""
-    logger.info(f"Processing {len(data)} items")
+client = APIClient("https://api.example.com", "your-api-key")
+users = client.get("users", params={"limit": 10})
+```
 
-    try:
-        for item in data:
-            logger.debug(f"Processing item: {item}")
-            # Process item
-        logger.info("Processing completed successfully")
-    except Exception as e:
-        logger.error(f"Processing failed: {e}", exc_info=True)
+### Database Operations
+
+```python
+import sqlite3
+from contextlib import contextmanager
+
+class DatabaseManager:
+    """Database manager with context manager support."""
+
+    def __init__(self, db_path):
+        self.db_path = db_path
+        self.init_database()
+
+    def init_database(self):
+        """Initialize database tables."""
+        with self.get_connection() as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+
+    @contextmanager
+    def get_connection(self):
+        """Context manager for database connections."""
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row  # Enable column access by name
+        try:
+            yield conn
+        except Exception:
+            conn.rollback()
+            raise
+        else:
+            conn.commit()
+        finally:
+            conn.close()
+
+    def create_user(self, name, email):
+        """Create a new user."""
+        with self.get_connection() as conn:
+            cursor = conn.execute(
+                'INSERT INTO users (name, email) VALUES (?, ?)',
+                (name, email)
+            )
+            return cursor.lastrowid
+
+    def get_user(self, user_id):
+        """Get user by ID."""
+        with self.get_connection() as conn:
+            cursor = conn.execute(
+                'SELECT * FROM users WHERE id = ?',
+                (user_id,)
+            )
+            row = cursor.fetchone()
+            return dict(row) if row else None
+
+# Usage
+db = DatabaseManager("users.db")
+user_id = db.create_user("Alice", "alice@example.com")
+user = db.get_user(user_id)
 ```
 
 ---
 
-## Regular Expressions
+## Quick Reference
 
 ### Common Patterns
 
 ```python
-import re
-from typing import List, Optional
+# Singleton pattern
+class Singleton:
+    _instance = None
 
-# Compiled patterns for efficiency
-EMAIL_PATTERN = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})
-PHONE_PATTERN = re.compile(r'^\+?1?\d{9,15})
-URL_PATTERN = re.compile(r'https?://(?:[-\w.])+(?:\:[0-9]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:\#(?:[\w.])*)?)?')
-IP_PATTERN = re.compile(r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
-def validate_email(email: str) -> bool:
-    """Validate email format."""
-    return bool(EMAIL_PATTERN.match(email))
+# Factory pattern
+class ShapeFactory:
+    @staticmethod
+    def create_shape(shape_type, **kwargs):
+        if shape_type == "circle":
+            return Circle(kwargs["radius"])
+        elif shape_type == "rectangle":
+            return Rectangle(kwargs["width"], kwargs["height"])
+        else:
+            raise ValueError(f"Unknown shape type: {shape_type}")
 
-def extract_urls(text: str) -> List[str]:
-    """Extract URLs from text."""
-    return URL_PATTERN.findall(text)
+# Observer pattern
+class Observable:
+    def __init__(self):
+        self._observers = []
 
-def clean_text(text: str) -> str:
-    """Clean text by removing extra whitespace."""
-    # Remove multiple spaces
-    text = re.sub(r'\s+', ' ', text)
-    # Remove leading/trailing whitespace
-    text = text.strip()
-    return text
+    def attach(self, observer):
+        self._observers.append(observer)
 
-def extract_numbers(text: str) -> List[float]:
-    """Extract numbers from text."""
-    pattern = r'-?\d+\.?\d*'
-    matches = re.findall(pattern, text)
-    return [float(match) for match in matches]
+    def detach(self, observer):
+        self._observers.remove(observer)
 
-# Advanced regex operations
-def replace_with_function(text: str, pattern: str, replacement_func: callable) -> str:
-    """Replace matches using a function."""
-    return re.sub(pattern, replacement_func, text)
+    def notify(self, event):
+        for observer in self._observers:
+            observer.update(event)
 
-# Example: Convert to title case
-def to_title_case(match):
-    """Convert match to title case."""
-    return match.group(0).title()
+# Chain of responsibility
+class Handler:
+    def __init__(self, successor=None):
+        self.successor = successor
 
-# Usage
-text = "hello world python programming"
-result = replace_with_function(text, r'\b\w+\b', to_title_case)
+    def handle(self, request):
+        if self.can_handle(request):
+            return self.process(request)
+        elif self.successor:
+            return self.successor.handle(request)
+        else:
+            raise ValueError("No handler available")
+
+    def can_handle(self, request):
+        raise NotImplementedError
+
+    def process(self, request):
+        raise NotImplementedError
+```
+
+### Performance Tips
+
+```python
+# Use local variables in loops
+def slow_function():
+    for i in range(1000):
+        math.sqrt(i)  # Global lookup
+
+def fast_function():
+    sqrt = math.sqrt  # Local variable
+    for i in range(1000):
+        sqrt(i)
+
+# Use __slots__ for memory efficiency
+class Point:
+    __slots__ = ['x', 'y']
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+# Use collections.deque for queues
+from collections import deque
+queue = deque()
+queue.append(1)  # O(1)
+queue.popleft()  # O(1)
+
+# Use dict.get() instead of try/except for optional keys
+# Slow
+try:
+    value = dictionary['key']
+except KeyError:
+    value = default_value
+
+# Fast
+value = dictionary.get('key', default_value)
+
+# Use list comprehensions instead of loops
+# Slow
+result = []
+for i in range(10):
+    result.append(i * 2)
+
+# Fast
+result = [i * 2 for i in range(10)]
 ```
 
 ---
 
-## Professional Best Practices
+## Conclusion
 
-### Code Organization
+This comprehensive Python cheat sheet covers fundamental concepts, advanced features, and professional best practices. Remember these key principles:
 
-```python
-# Project structure
-"""
-project/
-├── src/
-│   ├── __init__.py
-│   ├
-```
+1. **Write readable code** - Code is read more often than it's written
+2. **Follow PEP 8** - Consistent style improves maintainability
+3. **Use type hints** - They improve code documentation and catch errors
+4. **Handle errors gracefully** - Anticipate and handle edge cases
+5. **Test your code** - Automated tests prevent regressions
+6. **Profile before optimizing** - Measure performance bottlenecks
+7. **Document your code** - Clear docstrings and comments help others
+8. **Use virtual environments** - Isolate project dependencies
+9. **Keep learning** - Python ecosystem is constantly evolving
+10. **Practice regularly** - Consistent coding improves skills
+
+Remember: The best code is not just functional, but also readable, maintainable, and efficient. Happy coding!

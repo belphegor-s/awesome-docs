@@ -36,7 +36,7 @@ const App = () => {
             <button onClick={() => setDrawerOpen(true)}>
               <Menu className="w-6 h-6 text-white" />
             </button>
-            <span className="ml-4 text-lg font-semibold">Docs Hub</span>
+            <span className="ml-4 text-lg font-semibold">Awesome Docs</span>
           </div>
 
           <Routes>
