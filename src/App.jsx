@@ -13,7 +13,7 @@ const App = () => {
       <div className="flex h-screen bg-zinc-950 text-white relative">
         <div
           className={`
-            fixed top-0 left-0 z-50 h-full w-64 bg-zinc-950 border-r border-slate-700
+            fixed top-0 left-0 z-50 h-full w-56 bg-zinc-950 border-r border-slate-700
             transform transition-transform duration-300 ease-in-out
             md:static md:translate-x-0 md:z-auto
             ${drawerOpen ? 'translate-x-0' : '-translate-x-full'}
